@@ -2,39 +2,48 @@
   <div class="flex justify-center">
     <div id='firebaseui-auth'>
       <div id="fb-root"></div>
-      <div class="fb-login-button" data-size="large" data-button-type="login_with" data-layout="default" data-auto-logout-link="true" data-use-continue-as="false" data-width=""></div>
+      <a href="#" @click.prevent="login('facebook')">login with fb</a> <br>
+      <a href="#" @click.prevent="login('google')">login with google</a>
     </div>
   </div>
 </template>
 
 <script>
 import firebase from 'firebase'
-import firebaseui from 'firebaseui'
-import 'firebaseui/dist/firebaseui.css'
 export default {
   name: 'login',
   data () {
     return {
-      user: null
     }
-  },
-  created () {
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        this.user = user
-      }
-    })
   },
   mounted () {
-    let ui = firebaseui.auth.AuthUI.getInstance()
-    if (!ui) {
-      ui = new firebaseui.auth.AuthUi(firebase.auth())
+  },
+  methods: {
+    login (x) {
+      let provider = null
+      if (x === 'facebook') {
+        provider = new firebase.auth.FacebookAuthProvider()
+      } else if (x === 'google') {
+        provider = new firebase.auth.GoogleAuthProvider()
+      }
+      firebase.auth().signInWithPopup(provider)
+        .then(async (result) => {
+          if (result.credential) {
+            const token = result.credential.accessToken
+            localStorage.setItem('token', token)
+          }
+          this.$store.dispatch('fetchUser', result.user)
+        })
+        .catch((error) => {
+          const payload = {
+            code: error.code,
+            message: error.message,
+            email: error.email,
+            credential: error.credential
+          }
+          this.$store.commit('SET_ERROR', payload)
+        })
     }
-    const uiConfig = {
-      signInSuccessUrl: '/profile',
-      signInOptions: [firebase.auth.FacebookAuthProvider.PROVIDER_ID]
-    }
-    ui.start('#firebaseui-auth', uiConfig)
   }
 }
 </script>

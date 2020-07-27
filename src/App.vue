@@ -1,8 +1,38 @@
 <template>
   <div id="app">
+    <navbar />
     <router-view/>
   </div>
 </template>
+
+<script>
+import firebase from 'firebase'
+import navbar from './components/Navbar/navbar'
+export default {
+  name: 'app',
+  components: {
+    navbar
+  },
+  created () {
+    this.$store.commit('SET_LOADING', true)
+    firebase.auth().onAuthStateChanged(user => {
+      if (user && localStorage.token) {
+        this.$store.dispatch('fetchUser', user)
+        this.$store.commit('SET_LOGIN', true)
+        this.$store.commit('SET_LOADING', false)
+      } else {
+        this.$store.commit('SET_LOGIN', false)
+        this.$store.commit('SET_LOADING', false)
+      }
+    })
+  },
+  computed: {
+    loading () {
+      return this.$store.data.loading
+    }
+  }
+}
+</script>
 
 <style>
 /* Small (sm) */
