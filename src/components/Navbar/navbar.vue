@@ -8,11 +8,14 @@
         <span class="ml-3 text-xl">MoneyTory</span>
       </a>
       <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center" v-if="login">
-        <button class="inline-flex items-center bg-gray-200 border-0 py-1 px-3 focus:outline-none hover:bg-gray-300 rounded text-base mt-4 md:mt-0"><router-link to="/dashboard" class="mr-5 hover:text-gray-900">List</router-link>
+        <button class="inline-flex items-center bg-gray-200 border-0 py-1 px-3 focus:outline-none hover:bg-gray-300 rounded text-base mt-4 md:mt-0">
+          <router-link to="/dashboard" class="mr-5 hover:text-gray-900">List</router-link>
         </button>
-        <button class="inline-flex items-center bg-gray-200 border-0 py-1 px-3 focus:outline-none hover:bg-gray-300 rounded text-base mt-4 md:mt-0"><router-link to="/new" class="mr-5 hover:text-gray-900">Add New</router-link>
+        <button class="inline-flex items-center bg-gray-200 border-0 py-1 px-3 focus:outline-none hover:bg-gray-300 rounded text-base mt-4 md:mt-0">
+          <router-link to="/new" class="mr-5 hover:text-gray-900">Add New</router-link>
         </button>
-        <button class="inline-flex items-center bg-gray-200 border-0 py-1 px-3 focus:outline-none hover:bg-gray-300 rounded text-base mt-4 md:mt-0"><a @click="logout" v-if="login">Logout</a>
+        <button class="inline-flex items-center bg-gray-200 border-0 py-1 px-3 focus:outline-none hover:bg-gray-300 rounded text-base mt-4 md:mt-0">
+          <a @click="logout" v-if="login">Logout</a>
         </button>
       </nav>
     </div>

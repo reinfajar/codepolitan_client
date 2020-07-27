@@ -1,15 +1,19 @@
 <template>
   <div class="flex justify-center">
-    <div id='firebaseui-auth'>
-      <div id="fb-root"></div>
-      <a href="#" @click.prevent="login('facebook')">login with fb</a> <br>
-      <a href="#" @click.prevent="login('google')">login with google</a>
+    <div id='firebaseui-auth-container' @click.prevent="login">
+      <a href="#" @click.prevent="login('facebook')">
+        <img src="../../../assets/fb.png" width="300" height="100">
+      </a> <br>
+      <a href="#" @click.prevent="login('google')">
+        <img src="../../../assets/GoogleSignUpDark.png" width="300" height="100"></a>
     </div>
   </div>
 </template>
 
 <script>
 import firebase from 'firebase'
+// import * as firebaseui from 'firebaseui'
+import 'firebaseui/dist/firebaseui.css'
 export default {
   name: 'login',
   data () {
@@ -17,9 +21,24 @@ export default {
     }
   },
   mounted () {
+    // const uiConfig = {
+    //   signInSuccessUrl: '/dashboard',
+    //   signInOptions: [
+    //     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+    //     firebase.auth.FacebookAuthProvider.PROVIDER_ID
+    //   ]
+    // }
+    // const ui = new firebaseui.auth.AuthUI(firebase.auth())
+    // ui.start('#firebaseui-auth-container', uiConfig)
   },
   methods: {
     login (x) {
+      // firebase.auth().currentUser.getToken()
+      //   .then(token => {
+      //     console.log(token)
+      //   })
+      // this.$router('/dashboard')
+      this.$store.commit('SET_LOADING', true)
       let provider = null
       if (x === 'facebook') {
         provider = new firebase.auth.FacebookAuthProvider()
@@ -33,6 +52,8 @@ export default {
             localStorage.setItem('token', token)
           }
           this.$store.dispatch('fetchUser', result.user)
+          this.$store.dispatch('fetchData', result.user.uid)
+          this.$router.push('/dashboard')
         })
         .catch((error) => {
           const payload = {

@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <navbar />
+    <!-- <loading v-if="!loading" /> -->
     <router-view/>
   </div>
 </template>
@@ -8,18 +9,21 @@
 <script>
 import firebase from 'firebase'
 import navbar from './components/Navbar/navbar'
+// import loading from './components/loader/loading'
 export default {
   name: 'app',
   components: {
     navbar
+    // loading
   },
   created () {
-    this.$store.commit('SET_LOADING', true)
     firebase.auth().onAuthStateChanged(user => {
       if (user && localStorage.token) {
         this.$store.dispatch('fetchUser', user)
+        this.$store.dispatch('fetchData', user.uid)
         this.$store.commit('SET_LOGIN', true)
         this.$store.commit('SET_LOADING', false)
+        this.$router.push('/dashboard')
       } else {
         this.$store.commit('SET_LOGIN', false)
         this.$store.commit('SET_LOADING', false)

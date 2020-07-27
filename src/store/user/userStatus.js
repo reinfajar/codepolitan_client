@@ -1,4 +1,3 @@
-import router from '../../router/index'
 import * as fb from '../../firebase'
 
 const store = {
@@ -21,10 +20,10 @@ const store = {
         displayName: user.displayName,
         email: user.email
       }
-      await fb.user.doc(user.uid).set(payload)
+      await fb.user.doc(user.uid).set(payload, { merge: true })
       commit('SET_USERDATA', payload)
+      localStorage.setItem('token', user.token)
       commit('SET_LOGIN', true)
-      router.push('/dashboard')
     }
   }
 }

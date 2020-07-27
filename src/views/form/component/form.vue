@@ -32,7 +32,7 @@
           </div>
         </div>
         <div class="p-2 w-full">
-          <textarea class="w-full bg-gray-100 rounded border border-gray-400 focus:outline-none h-48 focus:border-indigo-500 text-base px-4 py-2 resize-none block"
+          <textarea v-model="description" class="w-full bg-gray-100 rounded border border-gray-400 focus:outline-none h-48 focus:border-indigo-500 text-base px-4 py-2 resize-none block"
           placeholder="Description"></textarea>
         </div>
         <div class="p-2 w-full">
@@ -46,7 +46,7 @@
 
 <script>
 export default {
-  name: 'form',
+  name: 'inputForm',
   data () {
     return {
       name: '',
@@ -57,13 +57,16 @@ export default {
   },
   methods: {
     submit () {
-      const payload = {
+      const payload = this.$store.state.userStatus.userData
+      payload.data = this.$store.state.data.tableData
+      payload.data.push({
         name: this.name,
         balance: this.balance,
         type: this.type,
         description: this.description
-      }
-      console.log(payload)
+      })
+      this.$store.dispatch('postData', payload)
+      this.$router.go(-1)
     }
   }
 }
