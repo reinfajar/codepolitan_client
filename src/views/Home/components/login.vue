@@ -53,6 +53,7 @@ export default {
           }
           this.$store.dispatch('fetchUser', result.user)
           this.$store.dispatch('fetchData', result.user.uid)
+          this.$store.commit('SET_ERROR', false)
           this.$router.push('/dashboard')
         })
         .catch((error) => {

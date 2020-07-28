@@ -22,7 +22,6 @@ const store = {
       }
       await fb.user.doc(user.uid).set(payload, { merge: true })
       commit('SET_USERDATA', payload)
-      localStorage.setItem('token', user.token)
       commit('SET_LOGIN', true)
     }
   }

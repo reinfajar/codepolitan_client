@@ -59,14 +59,23 @@ export default {
     submit () {
       const payload = this.$store.state.userStatus.userData
       payload.data = this.$store.state.data.tableData
-      payload.data.push({
-        name: this.name,
-        balance: this.balance,
-        type: this.type,
-        description: this.description
-      })
-      this.$store.dispatch('postData', payload)
-      this.$router.go(-1)
+      if (this.name.length === 0 || this.balance < 0 || this.type.length === 0) {
+        const error = {
+          message: 'Data cant be empty'
+        }
+        this.$store.commit('SET_ERROR', error)
+      } else {
+        payload.data.push({
+          name: this.name,
+          balance: this.balance,
+          type: this.type,
+          description: this.description,
+          date: new Date().toDateString()
+        })
+        this.$store.commit('SET_ERROR', false)
+        this.$store.dispatch('postData', payload)
+        this.$router.go(-1)
+      }
     }
   }
 }

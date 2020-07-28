@@ -1,20 +1,23 @@
 <template>
   <div id="app">
     <navbar />
-    <!-- <loading v-if="!loading" /> -->
-    <router-view/>
+    <error v-if="isError"/>
+    <loading v-if="loading" />
+    <router-view v-else/>
   </div>
 </template>
 
 <script>
 import firebase from 'firebase'
 import navbar from './components/Navbar/navbar'
-// import loading from './components/loader/loading'
+import loading from './components/loader/loading'
+import error from './components/error/error'
 export default {
   name: 'app',
   components: {
-    navbar
-    // loading
+    navbar,
+    loading,
+    error
   },
   created () {
     firebase.auth().onAuthStateChanged(user => {
@@ -32,7 +35,10 @@ export default {
   },
   computed: {
     loading () {
-      return this.$store.data.loading
+      return this.$store.state.data.loading
+    },
+    isError () {
+      return this.$store.state.data.error
     }
   }
 }
