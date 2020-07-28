@@ -21,7 +21,8 @@ export default {
   },
   created () {
     firebase.auth().onAuthStateChanged(user => {
-      if (user && localStorage.token) {
+      if (user) {
+        localStorage.setItem('token', user.refreshToken)
         this.$store.dispatch('fetchUser', user)
         this.$store.dispatch('fetchData', user.uid)
         this.$store.commit('SET_LOGIN', true)

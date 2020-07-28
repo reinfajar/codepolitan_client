@@ -8,15 +8,21 @@
         <span class="ml-3 text-xl">MoneyTory</span>
       </a>
       <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center" v-if="login">
-        <button class="inline-flex items-center bg-gray-200 border-0 py-1 px-3 focus:outline-none hover:bg-gray-300 rounded text-base mt-4 md:mt-0">
-          <router-link to="/dashboard" class="mr-5 hover:text-gray-900">List</router-link>
-        </button>
-        <button class="inline-flex items-center bg-gray-200 border-0 py-1 px-3 focus:outline-none hover:bg-gray-300 rounded text-base mt-4 md:mt-0">
-          <router-link to="/new" class="mr-5 hover:text-gray-900">Add New</router-link>
-        </button>
-        <button class="inline-flex items-center bg-gray-200 border-0 py-1 px-3 focus:outline-none hover:bg-gray-300 rounded text-base mt-4 md:mt-0">
-          <a @click.prevent="logout" v-if="login">Logout</a>
-        </button>
+        <router-link to="/dashboard" class="mr-5 hover:text-gray-900">
+          <button class="inline-flex items-center bg-gray-200 border-0 py-1 px-3 focus:outline-none hover:bg-gray-300 rounded text-base mt-4 md:mt-0">
+            List
+          </button>
+        </router-link>
+        <router-link to="/new" class="mr-5 hover:text-gray-900">
+          <button class="inline-flex items-center bg-gray-200 border-0 py-1 px-3 focus:outline-none hover:bg-gray-300 rounded text-base mt-4 md:mt-0">
+            Add New
+          </button>
+        </router-link>
+        <a @click.prevent="logout" v-if="login">
+          <button class="inline-flex items-center bg-gray-200 border-0 py-1 px-3 focus:outline-none hover:bg-gray-300 rounded text-base mt-4 md:mt-0">
+            Logout
+          </button>
+        </a>
       </nav>
     </div>
   </header>
@@ -35,6 +41,8 @@ export default {
     logout (e) {
       e.stopPropagation()
       firebase.auth().signOut()
+      localStorage.removeItem('token')
+      localStorage.removeItem('firebaseui::rememberedAccounts')
       this.$store.commit('SET_USERDATA', {})
       this.$router.push({
         name: 'Home'
