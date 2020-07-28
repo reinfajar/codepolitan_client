@@ -50,7 +50,7 @@ export default {
   data () {
     return {
       name: '',
-      balance: Number,
+      balance: 0,
       type: '',
       description: ''
     }
@@ -59,14 +59,36 @@ export default {
     submit () {
       const payload = this.$store.state.userStatus.userData
       payload.data = this.$store.state.data.tableData
-      payload.data.push({
-        name: this.name,
-        balance: this.balance,
-        type: this.type,
-        description: this.description
-      })
-      this.$store.dispatch('postData', payload)
-      this.$router.go(-1)
+      const error = {
+        status: false,
+        message: []
+      }
+      if (this.name.length === 0 || this.type.length === 0) {
+        error.status = true
+        error.message.push('Data cant be empty')
+      }
+      if (this.balance < 0 || !this.validate_money(this.balance)) {
+        error.status = true
+        error.message.push('Balance must be bigger than 0 and only number')
+      }
+      if (!error.status) {
+        payload.data.push({
+          name: this.name,
+          balance: this.balance,
+          type: this.type,
+          description: this.description,
+          date: new Date().toDateString()
+        })
+        this.$store.commit('SET_ERROR', false)
+        this.$store.dispatch('postData', payload)
+        this.$router.go(-1)
+      } else {
+        this.$store.commit('SET_ERROR', error)
+      }
+    },
+    validate_money (i) {
+      const regex = /^\d+$/
+      return regex.test(i)
     }
   }
 }

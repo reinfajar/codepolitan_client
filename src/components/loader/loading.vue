@@ -1,12 +1,12 @@
 <template>
-  <vcl-instagram></vcl-instagram>
+    <vcl-facebook></vcl-facebook>
 </template>
 
 <script>
-import { VclInstagram } from 'vue-content-loading'
+import { VclFacebook } from 'vue-content-loading'
 export default {
   components: {
-    VclInstagram
+    VclFacebook
   }
 }
 </script>
