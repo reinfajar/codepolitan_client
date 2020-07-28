@@ -9,9 +9,11 @@
     <div class="flex flex-wrap -m-4">
       <Card v-for="(table, x) in tables" :key="x" :data="table" />
     </div>
-    <button class="flex mx-auto mt-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">
-      <router-link to="/new" class="mr-5 hover:text-gray-900">Add New</router-link>
-    </button>
+    <router-link to="/new" class="mr-5 hover:text-gray-900">
+      <button class="flex mx-auto mt-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">
+        Add New
+      </button>
+    </router-link>
   </div>
 </section>
 </template>
