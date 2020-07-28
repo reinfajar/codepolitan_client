@@ -4,7 +4,7 @@
     <div class="flex flex-wrap w-full mb-20 flex-col items-center text-center">
       <h1 v-if="balance.status" class="sm:text-3xl text-2xl font-medium title-font mb-2 text-green-400">{{ balance.bal }}</h1>
       <h1 v-else class="sm:text-3xl text-2xl font-medium title-font mb-2 text-red-400">{{ balance.bal }}</h1>
-      <p class="lg:w-1/2 w-full leading-relaxed text-base">Balance left in your Account</p>
+      <p class="lg:w-1/2 w-full leading-relaxed text-white">Balance left in your Account</p>
     </div>
     <div class="flex flex-wrap -m-4">
       <Card v-for="(table, x) in tables" :key="x" :data="table" />

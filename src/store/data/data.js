@@ -14,7 +14,7 @@ const store = {
       state.error = payload
     },
     SET_TABLEDATA (state, payload) {
-      state.tableData = payload
+      state.tableData = payload.reverse()
     }
   },
   actions: {
