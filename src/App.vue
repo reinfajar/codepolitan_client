@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="bg-gray-900">
+  <div id="app" class="bg-gray-900 min-h-screen">
     <navbar />
     <error v-if="isError"/>
     <loading v-if="loading" />
